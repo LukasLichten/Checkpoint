@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@
 class Title {
 public:
     void init(u8 saveDataType, u64 titleid, AccountUid userID, const std::string& name, const std::string& author);
-    ~Title(void){};
+    ~Title() = default;
 
     std::string author(void);
     std::pair<std::string, std::string> displayName(void);

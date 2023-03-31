@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -90,8 +90,9 @@ void CheatManagerOverlay::drawBottom(void) const
     C2D_DrawRectSolid(0, 0, 0.5f, 320, 240, COLOR_OVERLAY);
 }
 
-void CheatManagerOverlay::update(touchPosition* touch)
+void CheatManagerOverlay::update(const InputState& input)
 {
+    (void)input;
     if (hidKeysDown() & KEY_A) {
         std::string cellName = scrollable->cellName(scrollable->index());
         if (cellName.compare(0, MAGIC_LEN, SELECTED_MAGIC) == 0) {

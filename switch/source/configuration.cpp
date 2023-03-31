@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ static const char* s_http_port = "8000";
 
 static void handle_populate(struct mg_connection* nc, struct http_message* hm)
 {
+    (void)hm;
     // populate gets called at startup, assume a new connection has been started
     blinkLed(2);
 

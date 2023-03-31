@@ -24,30 +24,16 @@
  *         reasonable ways as different from the original version.
  */
 
-#include "colors.hpp"
+#ifndef INPUTSTATE_HPP
+#define INPUTSTATE_HPP
 
-static const struct Theme defaultTheme = {
-    COLOR_BLACK,       // c0
-    COLOR_GREY_BG,     // c1
-    COLOR_GREY_DARKER, // c2
-    COLOR_GREY_DARK,   // c3
-    COLOR_GREY_MEDIUM, // c4
-    COLOR_GREY_LIGHT,  // c5
-    COLOR_WHITE        // c6
+#include <switch.h>
+
+struct InputState {
+    HidTouchScreenState touch;
+    u64 kDown;
+    u64 kHeld;
+    u64 kUp;
 };
 
-static struct Theme currentTheme = defaultTheme;
-
-void theme(int t)
-{
-    switch (t) {
-        default:
-            currentTheme = defaultTheme;
-            break;
-    }
-}
-
-struct Theme theme(void)
-{
-    return currentTheme;
-}
+#endif

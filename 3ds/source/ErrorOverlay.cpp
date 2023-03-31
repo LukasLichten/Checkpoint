@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -61,8 +61,9 @@ void ErrorOverlay::drawBottom(void) const
     Gui::drawPulsingOutline(42, 162, 236, 36, 2, COLOR_RED);
 }
 
-void ErrorOverlay::update(touchPosition* touch)
+void ErrorOverlay::update(const InputState& input)
 {
+    (void)input;
     if (button->released() || (hidKeysDown() & KEY_A) || (hidKeysDown() & KEY_B)) {
         screen.removeOverlay();
     }

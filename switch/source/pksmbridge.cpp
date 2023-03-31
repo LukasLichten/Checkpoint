@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -162,18 +162,21 @@ std::tuple<bool, Result, std::string> recvFromPKSMBridge(size_t index, AccountUi
         return std::make_tuple(false, errno, "Socket accept failed.");
     }
 
-    size_t size = 0x100000;
+    size_t size;
     Title title;
     getTitle(title, uid, index);
     std::string filename;
     if (isLGPE(title.id())) {
         filename = "/savedata.bin";
+        size     = 0x100000;
     }
     else if (isSWSH(title.id())) {
         filename = "/backup";
+        size     = 0x180B19;
     }
     else {
         filename = "DEFAULT";
+        // WHAT DO WE DO ABOUT SIZE?
     }
     std::string srcPath = title.fullPath(cellIndex) + filename;
     FILE* save          = fopen(srcPath.c_str(), "wb");

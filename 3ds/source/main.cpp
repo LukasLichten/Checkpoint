@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -52,16 +52,16 @@ int main()
             }
         }
 
-        // if (Configuration::getInstance().shouldScanCard()) {
-        //     updateCard();
-        // }
+        if (Configuration::getInstance().shouldScanCard()) {
+            updateCard();
+        }
 
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         g_screen->doDrawTop();
         C2D_SceneBegin(g_bottom);
         g_screen->doDrawBottom();
         Gui::frameEnd();
-        g_screen->doUpdate(&touch);
+        g_screen->doUpdate(InputState{touch});
     }
 
     Logger::getInstance().flush();

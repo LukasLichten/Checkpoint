@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,9 +45,10 @@ void ErrorOverlay::draw(void) const
     drawPulsingOutline(322, 462, 636, 56, 4, COLOR_RED);
 }
 
-void ErrorOverlay::update(touchPosition* touch)
+void ErrorOverlay::update(const InputState& input)
 {
-    if (button->released() || (hidKeysDown(CONTROLLER_P1_AUTO) & KEY_A) || (hidKeysDown(CONTROLLER_P1_AUTO) & KEY_B)) {
+    const u64 kDown = input.kDown;
+    if (button->released() || (kDown & HidNpadButton_A) || (kDown & HidNpadButton_B)) {
         screen.removeOverlay();
     }
 }

@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -70,7 +70,10 @@ Result servicesInit(void)
 
     romfsInit();
 
-    if (R_FAILED(res = plInitialize())) {
+    padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+    hidInitializeTouchScreen();
+
+    if (R_FAILED(res = plInitialize(PlServiceType_User))) {
         Logger::getInstance().log(Logger::ERROR, "plInitialize failed. Result code 0x%08lX.", res);
         return res;
     }
@@ -176,11 +179,13 @@ HidsysNotificationLedPattern blinkLedPattern(u8 times)
 void blinkLed(u8 times)
 {
     if (g_notificationLedAvailable) {
+        PadState pad;
+        padInitializeDefault(&pad);
         s32 n;
-        u64 uniquePadIds[2];
+        HidsysUniquePadId uniquePadIds[2]    = {0};
         HidsysNotificationLedPattern pattern = blinkLedPattern(times);
         memset(uniquePadIds, 0, sizeof(uniquePadIds));
-        Result res = hidsysGetUniquePadsFromNpad(hidGetHandheldMode() ? CONTROLLER_HANDHELD : CONTROLLER_PLAYER_1, uniquePadIds, 2, &n);
+        Result res = hidsysGetUniquePadsFromNpad(padIsHandheld(&pad) ? HidNpadIdType_Handheld : HidNpadIdType_No1, uniquePadIds, 2, &n);
         if (R_SUCCEEDED(res)) {
             for (s32 i = 0; i < n; i++) {
                 hidsysSetNotificationLedPattern(&pattern, uniquePadIds[i]);

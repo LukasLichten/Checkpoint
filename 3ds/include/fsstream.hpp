@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ class FSStream {
 public:
     FSStream(FS_Archive archive, const std::u16string& path, u32 flags);
     FSStream(FS_Archive archive, const std::u16string& path, u32 flags, u32 size);
-    ~FSStream(void){};
+    ~FSStream() = default;
 
     Result close(void);
     bool eof(void);

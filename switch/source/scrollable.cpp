@@ -1,6 +1,6 @@
 /*
  *   This file is part of Checkpoint
- *   Copyright (C) 2017-2019 Bernardo Giordano, FlagBrew
+ *   Copyright (C) 2017-2021 Bernardo Giordano, FlagBrew
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,13 +54,11 @@ void Scrollable::push_back(SDL_Color color, SDL_Color colorMessage, const std::s
 
 void Scrollable::updateSelection(void)
 {
-    touchPosition touch;
-    hidTouchRead(&touch, 0);
-
     const int hu = (mHid.maxEntries(size()) + 1) * mh / mVisibleEntries;
-    if (hidKeysHeld(CONTROLLER_P1_AUTO) & KEY_TOUCH && touch.py > (float)my && touch.py < (float)(my + hu) && touch.px > (float)mx &&
-        touch.px < (float)(mx + mw)) {
-        mHid.index(ceilf((touch.py - my) * mVisibleEntries / mh));
+
+    if (g_input->touch.count > 0 && g_input->touch.touches[0].y > (float)my && g_input->touch.touches[0].y < (float)(my + hu) &&
+        g_input->touch.touches[0].x > (float)mx && g_input->touch.touches[0].x < (float)(mx + mw)) {
+        mHid.index(ceilf((g_input->touch.touches[0].y - my) * mVisibleEntries / mh));
     }
 
     mHid.update(size());
